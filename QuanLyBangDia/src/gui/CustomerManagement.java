@@ -5,18 +5,27 @@
  */
 package gui;
 
+import Controll.CustomerDAO;
+import entities.Customer;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author MINH THIEN
  */
-public class CustomerManagement extends javax.swing.JFrame {
 
+public class CustomerManagement extends javax.swing.JFrame {
+    CustomerDAO cusDao = new CustomerDAO();
     /**
      * Creates new form EmployeeManagement
      */
     public CustomerManagement() {
         initComponents();
         setLocationRelativeTo(null);
+        loadTable();
     }
 
     /**
@@ -49,6 +58,7 @@ public class CustomerManagement extends javax.swing.JFrame {
         btn_addcus = new javax.swing.JButton();
         btn_updatecus = new javax.swing.JButton();
         btn_deletecus = new javax.swing.JButton();
+        btn_addcus1 = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -59,7 +69,7 @@ public class CustomerManagement extends javax.swing.JFrame {
 
         lb_title.setFont(new java.awt.Font("Times New Roman", 1, 48)); // NOI18N
         lb_title.setForeground(new java.awt.Color(255, 255, 255));
-        lb_title.setText("EMPLOYEE MANAGEMENT");
+        lb_title.setText("CUSTOMER MANAGEMENT");
 
         btn_exit.setBackground(new java.awt.Color(255, 255, 255));
         btn_exit.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -130,7 +140,7 @@ public class CustomerManagement extends javax.swing.JFrame {
                     .addGroup(panel_cusmanagementLayout.createSequentialGroup()
                         .addComponent(lb_cusid)
                         .addGap(64, 64, 64)
-                        .addComponent(lb_getcusid, javax.swing.GroupLayout.DEFAULT_SIZE, 279, Short.MAX_VALUE))
+                        .addComponent(lb_getcusid, javax.swing.GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_cusmanagementLayout.createSequentialGroup()
                         .addComponent(lb_cusname)
                         .addGap(45, 45, 45)
@@ -175,7 +185,7 @@ public class CustomerManagement extends javax.swing.JFrame {
             panel_inputidcusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_inputidcusLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tf_cusid)
+                .addComponent(tf_cusid, javax.swing.GroupLayout.DEFAULT_SIZE, 299, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panel_inputidcusLayout.setVerticalGroup(
@@ -207,7 +217,7 @@ public class CustomerManagement extends javax.swing.JFrame {
             panel_cuslistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_cuslistLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(scroll_cuslist)
+                .addComponent(scroll_cuslist, javax.swing.GroupLayout.DEFAULT_SIZE, 811, Short.MAX_VALUE)
                 .addContainerGap())
         );
         panel_cuslistLayout.setVerticalGroup(
@@ -222,72 +232,174 @@ public class CustomerManagement extends javax.swing.JFrame {
         btn_addcus.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         btn_addcus.setForeground(new java.awt.Color(255, 255, 255));
         btn_addcus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/plus.png"))); // NOI18N
-        btn_addcus.setText("THÊM");
+        btn_addcus.setText("SAVE");
+        btn_addcus.setToolTipText("");
+        btn_addcus.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addcusActionPerformed(evt);
+            }
+        });
 
         btn_updatecus.setBackground(new java.awt.Color(0, 153, 255));
         btn_updatecus.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         btn_updatecus.setForeground(new java.awt.Color(255, 255, 255));
         btn_updatecus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/update.png"))); // NOI18N
-        btn_updatecus.setText("SỬA");
+        btn_updatecus.setText("EDIT");
+        btn_updatecus.setPreferredSize(new java.awt.Dimension(111, 49));
 
         btn_deletecus.setBackground(new java.awt.Color(0, 153, 255));
         btn_deletecus.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
         btn_deletecus.setForeground(new java.awt.Color(204, 0, 51));
         btn_deletecus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minus.png"))); // NOI18N
-        btn_deletecus.setText("XÓA");
+        btn_deletecus.setText("DELETE");
 
-        javax.swing.GroupLayout panel_totalLayout = new javax.swing.GroupLayout(panel_total);
-        panel_total.setLayout(panel_totalLayout);
-        panel_totalLayout.setHorizontalGroup(
-            panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_totalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_totalLayout.createSequentialGroup()
-                        .addComponent(panel_cuslist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(panel_totalLayout.createSequentialGroup()
-                        .addComponent(panel_cusmanagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(panel_totalLayout.createSequentialGroup()
-                                .addComponent(btn_addcus)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_updatecus, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_deletecus, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(panel_inputidcus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(53, 53, 53))))
-        );
-        panel_totalLayout.setVerticalGroup(
-            panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_totalLayout.createSequentialGroup()
-                .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_totalLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(panel_inputidcus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36)
-                        .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_addcus, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_updatecus, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_deletecus, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panel_totalLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panel_cusmanagement, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panel_cuslist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
-        );
+        btn_addcus1.setBackground(new java.awt.Color(0, 153, 255));
+        btn_addcus1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btn_addcus1.setForeground(new java.awt.Color(255, 255, 255));
+        btn_addcus1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/plus.png"))); // NOI18N
+        btn_addcus1.setText("NEW\\");
+            btn_addcus1.setMaximumSize(new java.awt.Dimension(105, 49));
+            btn_addcus1.setMinimumSize(new java.awt.Dimension(105, 49));
+            btn_addcus1.setPreferredSize(new java.awt.Dimension(105, 49));
+            btn_addcus1.addActionListener(new java.awt.event.ActionListener() {
+                public void actionPerformed(java.awt.event.ActionEvent evt) {
+                    btn_addcus1ActionPerformed(evt);
+                }
+            });
 
-        getContentPane().add(panel_total, java.awt.BorderLayout.PAGE_END);
+            javax.swing.GroupLayout panel_totalLayout = new javax.swing.GroupLayout(panel_total);
+            panel_total.setLayout(panel_totalLayout);
+            panel_totalLayout.setHorizontalGroup(
+                panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panel_totalLayout.createSequentialGroup()
+                    .addContainerGap()
+                    .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panel_totalLayout.createSequentialGroup()
+                            .addComponent(panel_cuslist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addContainerGap())
+                        .addGroup(panel_totalLayout.createSequentialGroup()
+                            .addComponent(panel_cusmanagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(panel_totalLayout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btn_addcus1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btn_addcus, javax.swing.GroupLayout.DEFAULT_SIZE, 129, Short.MAX_VALUE))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(btn_updatecus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                        .addComponent(btn_deletecus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGap(14, 14, 14))
+                                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_totalLayout.createSequentialGroup()
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(panel_inputidcus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGap(49, 49, 49))))
+            );
+            panel_totalLayout.setVerticalGroup(
+                panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panel_totalLayout.createSequentialGroup()
+                    .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(panel_totalLayout.createSequentialGroup()
+                            .addGap(43, 43, 43)
+                            .addComponent(panel_inputidcus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btn_addcus1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btn_updatecus, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btn_addcus, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btn_deletecus, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(12, 12, 12))
+                        .addGroup(panel_totalLayout.createSequentialGroup()
+                            .addContainerGap()
+                            .addComponent(panel_cusmanagement, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_cuslist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap())
+            );
 
-        pack();
-    }// </editor-fold>//GEN-END:initComponents
+            btn_addcus1.getAccessibleContext().setAccessibleName("NEW");
+
+            getContentPane().add(panel_total, java.awt.BorderLayout.PAGE_END);
+
+            pack();
+        }// </editor-fold>//GEN-END:initComponents
 
     private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btn_exitActionPerformed
 
+    private void btn_addcus1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addcus1ActionPerformed
+        clear();
+        String cusid = makeNewID();
+        lb_cusid.setText(cusid);
+       
+    }//GEN-LAST:event_btn_addcus1ActionPerformed
+
+    private void btn_addcusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addcusActionPerformed
+
+        if(isEmpty()){
+           Customer customer = new Customer();
+           customer.setCustomerID(lb_cusid.getText().toString());
+           customer.setCustomerName(tf_getcusname.getText().toString());
+           customer.setPhoneNumber(tf_getcusphone.getText().toString());
+           customer.setAddress(tf_getcusaddress.getText().toString());
+           
+           if (cusDao.save(customer)){
+               JOptionPane.showMessageDialog(this, "Insert new customer is successfully");
+           }
+           else 
+                JOptionPane.showMessageDialog(this, "Insert new customer is successfully");
+       }
+        
+    }//GEN-LAST:event_btn_addcusActionPerformed
+    public String makeNewID(){
+        int temp =0;
+        List<Customer> liscus = cusDao.getAll(Customer.class);
+        for(int i =1;i<liscus.size();i++){
+            if (Integer.parseInt(liscus.get(i).getCustomerID())>temp){
+                temp = Integer.parseInt(liscus.get(i).getCustomerID());
+            }
+        }
+        temp +=1;
+        String newID = ""+temp;
+        return newID;
+    }
+    public void clear(){
+        tf_getcusaddress.setText("");
+        tf_getcusname.setText("");
+        tf_getcusphone.setText("");
+   }
+    public boolean isEmpty(){
+        if (tf_getcusaddress.getText().equalsIgnoreCase("") ||tf_getcusname.getText().equalsIgnoreCase("")|| tf_getcusphone.getText().equalsIgnoreCase("")){
+            JOptionPane.showMessageDialog(this, "Please make sure the fields are not empty ");
+            return false;
+        }
+        else
+            return true;     
+   }
+   public void loadTable() {
+        DefaultTableModel model = new DefaultTableModel(){
+            public boolean isCellEditable(int rowIndex, int mColIndex) { 
+            return false; 
+    }
+        };
+        model.addColumn("Customer ID");
+        model.addColumn("Customer Name");
+         model.addColumn("Address");
+        model.addColumn("Number Phone");
+       
+        for (Customer cus : cusDao.getAll(Customer.class)) {
+            model.addRow(new Object[]{
+                cus.getCustomerID(),
+                cus.getCustomerName(),
+                cus.getAddress(),
+                cus.getPhoneNumber()
+            });
+            this.tab_cuslist.setModel(model);
+        }
+    }
     /**
      * @param args the command line arguments
      */
@@ -326,6 +438,7 @@ public class CustomerManagement extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_addcus;
+    private javax.swing.JButton btn_addcus1;
     private javax.swing.JButton btn_deletecus;
     private javax.swing.JButton btn_exit;
     private javax.swing.JButton btn_updatecus;

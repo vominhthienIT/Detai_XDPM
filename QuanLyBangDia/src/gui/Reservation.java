@@ -5,6 +5,18 @@
  */
 package gui;
 
+import java.awt.event.KeyEvent;
+import entities.Customer;
+import entities.Disks;
+import Controll.CustomerDAO;
+import entities.Title;
+import Controll.DisksDAO;
+import Controll.ReservationDAO;
+import entities.Resevation;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JOptionPane;
 /**
  *
  * @author MINH THIEN
@@ -14,6 +26,11 @@ public class Reservation extends javax.swing.JFrame {
     /**
      * Creates new form Reservation
      */
+    TitleManagement titlemanage = new TitleManagement();
+    Title title = titlemanage.getTitlepub();
+    CustomerDAO cusDao = new CustomerDAO();
+    DisksDAO diskDao = new DisksDAO();
+    ReservationDAO reserveDao = new ReservationDAO();
     public Reservation() {
         initComponents();
         setLocationRelativeTo(null);
@@ -28,252 +45,145 @@ public class Reservation extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel_title3 = new javax.swing.JPanel();
-        lb_title3 = new javax.swing.JLabel();
-        btn_exit3 = new javax.swing.JButton();
         panel_total = new javax.swing.JPanel();
-        pane_dvdreservation = new javax.swing.JPanel();
-        lb_dvdid = new javax.swing.JLabel();
-        lb_getdvdid = new javax.swing.JLabel();
-        lb_dvdname = new javax.swing.JLabel();
-        lb_dvdaddress = new javax.swing.JLabel();
-        lb_ = new javax.swing.JLabel();
-        lb_getdvdname = new javax.swing.JLabel();
-        lb_cusaddress1 = new javax.swing.JLabel();
-        lb_1 = new javax.swing.JLabel();
-        panel_cusreservation = new javax.swing.JPanel();
+        panel_cusid = new javax.swing.JPanel();
         tf_cusid = new javax.swing.JTextField();
-        lb_cusname = new javax.swing.JLabel();
-        lb_getcusname = new javax.swing.JLabel();
-        lb_cusaddress = new javax.swing.JLabel();
-        lb_getcusaddress = new javax.swing.JLabel();
-        lb_cusphone = new javax.swing.JLabel();
-        lb_getcusphone = new javax.swing.JLabel();
-        panel_listreservation = new javax.swing.JPanel();
-        scroll_cuslist = new javax.swing.JScrollPane();
-        tab_cuslist = new javax.swing.JTable();
-        btn_confirm = new javax.swing.JButton();
+        panel_cusinfo = new javax.swing.JPanel();
+        lb_getname = new javax.swing.JLabel();
+        lb_name = new javax.swing.JLabel();
+        lb_address = new javax.swing.JLabel();
+        lb_getaddress = new javax.swing.JLabel();
+        lb_phone = new javax.swing.JLabel();
+        lb_getphone = new javax.swing.JLabel();
+        lb_datereservation = new javax.swing.JLabel();
+        lb_getdatereservation = new javax.swing.JLabel();
         btn_cancel = new javax.swing.JButton();
+        btn_confirm = new javax.swing.JButton();
+        panel_title = new javax.swing.JPanel();
+        lb_title = new javax.swing.JLabel();
+        btn_exit = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        panel_title3.setBackground(new java.awt.Color(51, 102, 255));
-        panel_title3.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 0, 2, new java.awt.Color(0, 0, 0)));
+        panel_total.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 2, true));
 
-        lb_title3.setFont(new java.awt.Font("Times New Roman", 1, 48)); // NOI18N
-        lb_title3.setForeground(new java.awt.Color(255, 255, 255));
-        lb_title3.setText("RESERVATION");
+        panel_cusid.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Input Customer ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 3, 12))); // NOI18N
 
-        btn_exit3.setBackground(new java.awt.Color(255, 255, 255));
-        btn_exit3.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
-        btn_exit3.setText("X");
-        btn_exit3.setOpaque(false);
-        btn_exit3.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_exit3ActionPerformed(evt);
+        tf_cusid.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_cusidKeyPressed(evt);
             }
         });
 
-        javax.swing.GroupLayout panel_title3Layout = new javax.swing.GroupLayout(panel_title3);
-        panel_title3.setLayout(panel_title3Layout);
-        panel_title3Layout.setHorizontalGroup(
-            panel_title3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_title3Layout.createSequentialGroup()
-                .addContainerGap(308, Short.MAX_VALUE)
-                .addComponent(lb_title3)
-                .addGap(190, 190, 190)
-                .addComponent(btn_exit3)
+        javax.swing.GroupLayout panel_cusidLayout = new javax.swing.GroupLayout(panel_cusid);
+        panel_cusid.setLayout(panel_cusidLayout);
+        panel_cusidLayout.setHorizontalGroup(
+            panel_cusidLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_cusidLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tf_cusid, javax.swing.GroupLayout.PREFERRED_SIZE, 185, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        panel_cusidLayout.setVerticalGroup(
+            panel_cusidLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_cusidLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tf_cusid, javax.swing.GroupLayout.DEFAULT_SIZE, 32, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        panel_title3Layout.setVerticalGroup(
-            panel_title3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_title3Layout.createSequentialGroup()
+
+        panel_cusinfo.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Customer Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 3, 12))); // NOI18N
+
+        lb_getname.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+
+        lb_name.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lb_name.setText("Name:");
+
+        lb_address.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lb_address.setText("Address:");
+
+        lb_getaddress.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+
+        lb_phone.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lb_phone.setText("Phone Number:");
+
+        lb_getphone.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+
+        lb_datereservation.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lb_datereservation.setText("Date Of Reservation:");
+
+        lb_getdatereservation.setFont(new java.awt.Font("Times New Roman", 2, 14)); // NOI18N
+
+        javax.swing.GroupLayout panel_cusinfoLayout = new javax.swing.GroupLayout(panel_cusinfo);
+        panel_cusinfo.setLayout(panel_cusinfoLayout);
+        panel_cusinfoLayout.setHorizontalGroup(
+            panel_cusinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_cusinfoLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btn_exit3, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_title3Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(lb_title3, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
-        );
-
-        getContentPane().add(panel_title3, java.awt.BorderLayout.CENTER);
-
-        panel_total.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
-
-        pane_dvdreservation.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "DVD/DISK Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 3, 12))); // NOI18N
-
-        lb_dvdid.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_dvdid.setText("DVD/DISK ID:");
-
-        lb_getdvdid.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_getdvdid.setText("00111");
-
-        lb_dvdname.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_dvdname.setText("DVD/DISK Name:");
-
-        lb_dvdaddress.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_dvdaddress.setText("Title Address:");
-
-        lb_.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_.setText("Customer Phone:");
-
-        lb_getdvdname.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_getdvdname.setText("Thám Tử CoNan Lừng Danh");
-
-        lb_cusaddress1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_cusaddress1.setText("Title Address:");
-
-        lb_1.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_1.setText("Customer Phone:");
-
-        javax.swing.GroupLayout pane_dvdreservationLayout = new javax.swing.GroupLayout(pane_dvdreservation);
-        pane_dvdreservation.setLayout(pane_dvdreservationLayout);
-        pane_dvdreservationLayout.setHorizontalGroup(
-            pane_dvdreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pane_dvdreservationLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pane_dvdreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_dvdaddress)
-                    .addComponent(lb_)
-                    .addComponent(lb_dvdname)
-                    .addComponent(lb_dvdid))
+                .addGroup(panel_cusinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lb_name)
+                    .addComponent(lb_address)
+                    .addComponent(lb_phone))
                 .addGap(31, 31, 31)
-                .addGroup(pane_dvdreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_getdvdid, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lb_getdvdname, javax.swing.GroupLayout.DEFAULT_SIZE, 298, Short.MAX_VALUE)
-                    .addComponent(lb_cusaddress1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(lb_1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(panel_cusinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_cusinfoLayout.createSequentialGroup()
+                        .addGroup(panel_cusinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(lb_getphone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(lb_getname, javax.swing.GroupLayout.DEFAULT_SIZE, 162, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lb_datereservation)
+                        .addGap(31, 31, 31)
+                        .addComponent(lb_getdatereservation, javax.swing.GroupLayout.DEFAULT_SIZE, 116, Short.MAX_VALUE))
+                    .addComponent(lb_getaddress, javax.swing.GroupLayout.PREFERRED_SIZE, 342, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
-        pane_dvdreservationLayout.setVerticalGroup(
-            pane_dvdreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pane_dvdreservationLayout.createSequentialGroup()
-                .addGroup(pane_dvdreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pane_dvdreservationLayout.createSequentialGroup()
+        panel_cusinfoLayout.setVerticalGroup(
+            panel_cusinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_cusinfoLayout.createSequentialGroup()
+                .addGroup(panel_cusinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_cusinfoLayout.createSequentialGroup()
                         .addGap(13, 13, 13)
-                        .addComponent(lb_dvdid))
-                    .addGroup(pane_dvdreservationLayout.createSequentialGroup()
+                        .addGroup(panel_cusinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lb_getname, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lb_name)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_cusinfoLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lb_getdvdid, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(30, 30, 30)
-                .addGroup(pane_dvdreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_dvdname)
-                    .addComponent(lb_getdvdname))
-                .addGap(40, 40, 40)
-                .addGroup(pane_dvdreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_dvdaddress)
-                    .addComponent(lb_cusaddress1))
-                .addGap(40, 40, 40)
-                .addGroup(pane_dvdreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_)
-                    .addComponent(lb_1))
-                .addGap(30, 30, 30))
+                        .addGroup(panel_cusinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lb_getdatereservation, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lb_datereservation))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panel_cusinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb_address)
+                    .addComponent(lb_getaddress, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, Short.MAX_VALUE)
+                .addGroup(panel_cusinfoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lb_getphone, javax.swing.GroupLayout.PREFERRED_SIZE, 27, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lb_phone))
+                .addGap(24, 24, 24))
         );
 
-        panel_cusreservation.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Input Customer ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 3, 12))); // NOI18N
-
-        lb_cusname.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_cusname.setText("Customer Name:");
-
-        lb_getcusname.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_getcusname.setText("Nguyễn Văn Tài");
-
-        lb_cusaddress.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_cusaddress.setText("Customer Address:");
-
-        lb_getcusaddress.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_getcusaddress.setText("Nguyễn Văn Tài");
-
-        lb_cusphone.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_cusphone.setText("Customer Phone:");
-
-        lb_getcusphone.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_getcusphone.setText("09320232");
-
-        javax.swing.GroupLayout panel_cusreservationLayout = new javax.swing.GroupLayout(panel_cusreservation);
-        panel_cusreservation.setLayout(panel_cusreservationLayout);
-        panel_cusreservationLayout.setHorizontalGroup(
-            panel_cusreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_cusreservationLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panel_cusreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(tf_cusid, javax.swing.GroupLayout.DEFAULT_SIZE, 357, Short.MAX_VALUE)
-                    .addGroup(panel_cusreservationLayout.createSequentialGroup()
-                        .addGroup(panel_cusreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lb_cusaddress)
-                            .addComponent(lb_cusname)
-                            .addComponent(lb_cusphone))
-                        .addGap(18, 18, 18)
-                        .addGroup(panel_cusreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lb_getcusphone, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lb_getcusname, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(lb_getcusaddress, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addContainerGap())
-        );
-        panel_cusreservationLayout.setVerticalGroup(
-            panel_cusreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_cusreservationLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tf_cusid, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addGroup(panel_cusreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_getcusname)
-                    .addComponent(lb_cusname, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(20, 20, 20)
-                .addGroup(panel_cusreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_cusaddress)
-                    .addComponent(lb_getcusaddress))
-                .addGap(20, 20, 20)
-                .addGroup(panel_cusreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_cusphone)
-                    .addComponent(lb_getcusphone))
-                .addGap(20, 20, 20))
-        );
-
-        panel_listreservation.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Reservation List", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 3, 12))); // NOI18N
-
-        tab_cuslist.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        scroll_cuslist.setViewportView(tab_cuslist);
-
-        javax.swing.GroupLayout panel_listreservationLayout = new javax.swing.GroupLayout(panel_listreservation);
-        panel_listreservation.setLayout(panel_listreservationLayout);
-        panel_listreservationLayout.setHorizontalGroup(
-            panel_listreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_listreservationLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scroll_cuslist)
-                .addContainerGap())
-        );
-        panel_listreservationLayout.setVerticalGroup(
-            panel_listreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_listreservationLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scroll_cuslist, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-        );
-
-        btn_confirm.setBackground(new java.awt.Color(0, 153, 255));
-        btn_confirm.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        btn_confirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancel_blue.png"))); // NOI18N
-        btn_confirm.setText("CANCEL");
-
-        btn_cancel.setBackground(new java.awt.Color(0, 153, 255));
+        btn_cancel.setBackground(new java.awt.Color(255, 255, 255));
         btn_cancel.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        btn_cancel.setForeground(new java.awt.Color(255, 255, 255));
-        btn_cancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/plus.png"))); // NOI18N
-        btn_cancel.setText("CONFIRM");
+        btn_cancel.setForeground(new java.awt.Color(255, 0, 0));
+        btn_cancel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancel40.png"))); // NOI18N
+        btn_cancel.setText("CANCEL");
+        btn_cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelActionPerformed(evt);
+            }
+        });
+
+        btn_confirm.setBackground(new java.awt.Color(255, 255, 255));
+        btn_confirm.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btn_confirm.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/confirm40.png"))); // NOI18N
+        btn_confirm.setText("CONFIRM");
+        btn_confirm.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_confirmActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel_totalLayout = new javax.swing.GroupLayout(panel_total);
         panel_total.setLayout(panel_totalLayout);
@@ -282,45 +192,127 @@ public class Reservation extends javax.swing.JFrame {
             .addGroup(panel_totalLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_totalLayout.createSequentialGroup()
-                        .addComponent(panel_listreservation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(panel_totalLayout.createSequentialGroup()
-                        .addComponent(pane_dvdreservation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(panel_cusreservation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(panel_totalLayout.createSequentialGroup()
-                                .addComponent(btn_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(33, 33, 33)
-                                .addComponent(btn_confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(33, 33, 33))))
+                    .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_totalLayout.createSequentialGroup()
+                            .addGap(157, 157, 157)
+                            .addComponent(btn_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(85, 85, 85)
+                            .addComponent(btn_confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(panel_cusinfo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(panel_cusid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
         panel_totalLayout.setVerticalGroup(
             panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_totalLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(panel_totalLayout.createSequentialGroup()
-                        .addComponent(panel_cusreservation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_cancel, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_confirm, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addComponent(pane_dvdreservation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(panel_listreservation, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(panel_cusid, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(10, 10, 10)
+                .addComponent(panel_cusinfo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btn_cancel)
+                    .addComponent(btn_confirm))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
-        getContentPane().add(panel_total, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(panel_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 60, 630, 340));
+
+        panel_title.setBackground(new java.awt.Color(51, 102, 255));
+        panel_title.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 0, 2, new java.awt.Color(0, 0, 0)));
+
+        lb_title.setFont(new java.awt.Font("Times New Roman", 1, 36)); // NOI18N
+        lb_title.setForeground(new java.awt.Color(255, 255, 255));
+        lb_title.setText("Make Reservation");
+
+        btn_exit.setBackground(new java.awt.Color(255, 255, 255));
+        btn_exit.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
+        btn_exit.setText("X");
+        btn_exit.setOpaque(false);
+        btn_exit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_exitActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_titleLayout = new javax.swing.GroupLayout(panel_title);
+        panel_title.setLayout(panel_titleLayout);
+        panel_titleLayout.setHorizontalGroup(
+            panel_titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_titleLayout.createSequentialGroup()
+                .addContainerGap(182, Short.MAX_VALUE)
+                .addComponent(lb_title)
+                .addGap(95, 95, 95)
+                .addComponent(btn_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(21, 21, 21))
+        );
+        panel_titleLayout.setVerticalGroup(
+            panel_titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_titleLayout.createSequentialGroup()
+                .addGroup(panel_titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lb_title, javax.swing.GroupLayout.PREFERRED_SIZE, 60, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(panel_titleLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btn_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(162, 162, 162))
+        );
+
+        getContentPane().add(panel_title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 630, 60));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btn_exit3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exit3ActionPerformed
-        System.exit(0);
-    }//GEN-LAST:event_btn_exit3ActionPerformed
+    private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed
+        setVisible(false);
+        titlemanage.setVisible(true);
+    }//GEN-LAST:event_btn_exitActionPerformed
+
+    private void btn_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
+        setVisible(false);
+        titlemanage.setVisible(true);
+    }//GEN-LAST:event_btn_cancelActionPerformed
+
+    private void tf_cusidKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_cusidKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String id = tf_cusid.getText().toString();
+            try {
+                Customer cus = cusDao.findByID(id);
+                lb_getname.setText(cus.getCustomerName());
+                lb_getaddress.setText(cus.getAddress());
+                lb_getphone.setText(cus.getPhoneNumber());
+                lb_getdatereservation.setText(LocalDate.now().toString());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }//GEN-LAST:event_tf_cusidKeyPressed
+
+    private void btn_confirmActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_confirmActionPerformed
+
+        List<Disks> listDisk = diskDao.findDiskByIdTitle(title.getTitleID());
+        Customer customer = cusDao.findByID(tf_cusid.getText().toString());
+        boolean flag = false;
+        for(int i =0;i<listDisk.size();i++){
+            if(listDisk.get(i).getStatus().equalsIgnoreCase("On Shelves")){
+                JOptionPane.showMessageDialog(this, "The Disk is still on the shelf");
+                flag = false;
+                break;
+            }else{
+                flag = true;
+            }
+        }
+        if(flag = true){
+            Resevation reserve = new Resevation();
+            reserve.setReverationID(makeNewID());
+            reserve.setTitle(title);
+            reserve.setCustomer(customer);
+            reserve.setDayReserve(LocalDate.now());
+            reserveDao.save(reserve);
+            JOptionPane.showMessageDialog(this, "Make reservation is successfully");
+            this.setVisible(false);
+        }
+    }//GEN-LAST:event_btn_confirmActionPerformed
 
     /**
      * @param args the command line arguments
@@ -348,6 +340,7 @@ public class Reservation extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(Reservation.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -356,42 +349,36 @@ public class Reservation extends javax.swing.JFrame {
             }
         });
     }
+    public String makeNewID() {
+        int temp = 0;
+        List<Resevation> listReserve = reserveDao.getAll(Resevation.class);
+        for (int i = 0; i < listReserve.size(); i++) {
+            if (Integer.parseInt(listReserve.get(i).getReverationID()) > temp) {
+                temp = Integer.parseInt(listReserve.get(i).getReverationID());
+            }
+        }
+        temp++;
+        String newID = "" + temp;
+        return newID;
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_cancel;
     private javax.swing.JButton btn_confirm;
     private javax.swing.JButton btn_exit;
-    private javax.swing.JButton btn_exit1;
-    private javax.swing.JButton btn_exit2;
-    private javax.swing.JButton btn_exit3;
-    private javax.swing.JLabel lb_;
-    private javax.swing.JLabel lb_1;
-    private javax.swing.JLabel lb_cusaddress;
-    private javax.swing.JLabel lb_cusaddress1;
-    private javax.swing.JLabel lb_cusname;
-    private javax.swing.JLabel lb_cusphone;
-    private javax.swing.JLabel lb_dvdaddress;
-    private javax.swing.JLabel lb_dvdid;
-    private javax.swing.JLabel lb_dvdname;
-    private javax.swing.JLabel lb_getcusaddress;
-    private javax.swing.JLabel lb_getcusname;
-    private javax.swing.JLabel lb_getcusphone;
-    private javax.swing.JLabel lb_getdvdid;
-    private javax.swing.JLabel lb_getdvdname;
+    private javax.swing.JLabel lb_address;
+    private javax.swing.JLabel lb_datereservation;
+    private javax.swing.JLabel lb_getaddress;
+    private javax.swing.JLabel lb_getdatereservation;
+    private javax.swing.JLabel lb_getname;
+    private javax.swing.JLabel lb_getphone;
+    private javax.swing.JLabel lb_name;
+    private javax.swing.JLabel lb_phone;
     private javax.swing.JLabel lb_title;
-    private javax.swing.JLabel lb_title1;
-    private javax.swing.JLabel lb_title2;
-    private javax.swing.JLabel lb_title3;
-    private javax.swing.JPanel pane_dvdreservation;
-    private javax.swing.JPanel panel_cusreservation;
-    private javax.swing.JPanel panel_listreservation;
+    private javax.swing.JPanel panel_cusid;
+    private javax.swing.JPanel panel_cusinfo;
     private javax.swing.JPanel panel_title;
-    private javax.swing.JPanel panel_title1;
-    private javax.swing.JPanel panel_title2;
-    private javax.swing.JPanel panel_title3;
     private javax.swing.JPanel panel_total;
-    private javax.swing.JScrollPane scroll_cuslist;
-    private javax.swing.JTable tab_cuslist;
     private javax.swing.JTextField tf_cusid;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="CD">
+    <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+    <class>entities.Account</class>
+    <class>entities.Customer</class>
+    <class>entities.Disks</class>
+    <class>entities.LateCharge</class>
+    <class>entities.Manager</class>
+    <class>entities.RentInvoice</class>
+    <class>entities.RentInvoice_Detail</class>
+    <class>entities.RentInvoice_Detail_PK</class>
+    <class>entities.Speciess</class>
+    <class>entities.Title</class>
+    <class>entities.Resevation</class>
+    <properties>
+      <property name="hibernate.dialect" value="org.hibernate.dialect.SQLServerDialect"/>
+      <property name="hibernate.connection.useUnicode" value="true"/>
+      <property name="hibernate.connection.charSetvalue" value="UTF-8"/>
+      <property name="hibernate.connection.enCoding" value="UTF-8"/>
+      <property name="hibernate.hbm2ddl.auto" value="update"/>
+      <property name="hibernate.show_sql" value="true"/>
+      <property name="hibernate.format_sql" value="true"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:sqlserver://Localhost\QLCHXM:1433;databaseName=XayDungPhanMem"/>
+      <property name="javax.persistence.jdbc.user" value="sa"/>
+      <property name="javax.persistence.jdbc.driver" value="com.microsoft.sqlserver.jdbc.SQLServerDriver"/>
+      <property name="javax.persistence.jdbc.password" value="123123"/>
+    </properties>
+  </persistence-unit>
+</persistence>

@@ -129,7 +129,6 @@ public class Home extends javax.swing.JFrame {
         btn_exit.setBackground(new java.awt.Color(255, 255, 255));
         btn_exit.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btn_exit.setText("X");
-        btn_exit.setOpaque(false);
         btn_exit.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_exitActionPerformed(evt);

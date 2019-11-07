@@ -70,11 +70,21 @@ public class Login extends javax.swing.JFrame {
 
         btn_submit.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btn_submit.setText("Submit");
+        btn_submit.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_submitActionPerformed(evt);
+            }
+        });
         panel_container.add(btn_submit, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 230, -1, 40));
 
         btn_cancel.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
         btn_cancel.setText("Cancel");
         btn_cancel.setPreferredSize(new java.awt.Dimension(77, 25));
+        btn_cancel.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelActionPerformed(evt);
+            }
+        });
         panel_container.add(btn_cancel, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 230, -1, 40));
 
         lb_background.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/background_login.jpg"))); // NOI18N
@@ -84,6 +94,14 @@ public class Login extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_cancelActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelActionPerformed
+        System.exit(0);
+    }//GEN-LAST:event_btn_cancelActionPerformed
+
+    private void btn_submitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_submitActionPerformed
+        
+    }//GEN-LAST:event_btn_submitActionPerformed
 
     /**
      * @param args the command line arguments

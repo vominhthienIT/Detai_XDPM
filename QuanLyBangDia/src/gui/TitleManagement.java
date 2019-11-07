@@ -5,6 +5,16 @@
  */
 package gui;
 
+import Controll.TitleDAO;
+import Controll.ReservationDAO;
+import entities.Resevation;
+import entities.Title;
+import java.awt.event.KeyEvent;
+import java.time.LocalDate;
+import java.util.List;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author MINH THIEN
@@ -14,9 +24,25 @@ public class TitleManagement extends javax.swing.JFrame {
     /**
      * Creates new form TitleManagement
      */
+    TitleDAO titleDao = new TitleDAO();
+    ReservationDAO reserveDao = new ReservationDAO();
+    public static Title titlepub;
+
+    public static Title getTitlepub() {
+        return titlepub;
+    }
+
+    public static void setTitlepub(Title titlepub) {
+        TitleManagement.titlepub = titlepub;
+    }
+
+    
+    
     public TitleManagement() {
         initComponents();
         setLocationRelativeTo(null);
+        loadTable();
+        loadReservation();
     }
 
     /**
@@ -33,31 +59,32 @@ public class TitleManagement extends javax.swing.JFrame {
         btn_exit = new javax.swing.JButton();
         panel_total = new javax.swing.JPanel();
         panel_cusmanagement = new javax.swing.JPanel();
-        lb_cusid = new javax.swing.JLabel();
-        lb_getcusid = new javax.swing.JLabel();
-        lb_cusname = new javax.swing.JLabel();
-        lb_cusaddress = new javax.swing.JLabel();
-        lb_cusphone = new javax.swing.JLabel();
-        tf_getcusname = new javax.swing.JTextField();
-        tf_getcusaddress = new javax.swing.JTextField();
-        tf_getcusphone = new javax.swing.JTextField();
-        panel_inputidcus = new javax.swing.JPanel();
-        tf_cusid = new javax.swing.JTextField();
-        panel_cuslist = new javax.swing.JPanel();
+        lb_titleid = new javax.swing.JLabel();
+        lb_gettitleid = new javax.swing.JLabel();
+        lb_titlename = new javax.swing.JLabel();
+        tf_gettitlename = new javax.swing.JTextField();
+        btn_addtitle = new javax.swing.JButton();
+        btn_updatetitle = new javax.swing.JButton();
+        btn_deletetitle = new javax.swing.JButton();
+        panel_inputidtitle = new javax.swing.JPanel();
+        tf_inputidtitle = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        panel_titlelist = new javax.swing.JPanel();
+        scroll_titlelist = new javax.swing.JScrollPane();
+        tab_titlelist = new javax.swing.JTable();
+        panel_cusreservation = new javax.swing.JPanel();
         scroll_cuslist = new javax.swing.JScrollPane();
         tab_cuslist = new javax.swing.JTable();
-        btn_addcus = new javax.swing.JButton();
-        btn_updatecus = new javax.swing.JButton();
-        btn_deletecus = new javax.swing.JButton();
-        btn_addcus1 = new javax.swing.JButton();
-        btn_addcus2 = new javax.swing.JButton();
+        btn_resevation = new javax.swing.JButton();
+        btn_cancelreservation = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
-        setPreferredSize(new java.awt.Dimension(865, 700));
+        getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         panel_title.setBackground(new java.awt.Color(51, 102, 255));
-        panel_title.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 0, 2, new java.awt.Color(0, 0, 0)));
+        panel_title.setBorder(javax.swing.BorderFactory.createMatteBorder(2, 2, 2, 2, new java.awt.Color(0, 0, 0)));
+        panel_title.setPreferredSize(new java.awt.Dimension(1080, 50));
 
         lb_title.setFont(new java.awt.Font("Times New Roman", 1, 48)); // NOI18N
         lb_title.setForeground(new java.awt.Color(255, 255, 255));
@@ -77,49 +104,106 @@ public class TitleManagement extends javax.swing.JFrame {
         panel_title.setLayout(panel_titleLayout);
         panel_titleLayout.setHorizontalGroup(
             panel_titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_titleLayout.createSequentialGroup()
-                .addContainerGap(224, Short.MAX_VALUE)
+            .addGroup(panel_titleLayout.createSequentialGroup()
+                .addGap(276, 276, 276)
                 .addComponent(lb_title)
-                .addGap(101, 101, 101)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 203, Short.MAX_VALUE)
                 .addComponent(btn_exit)
                 .addContainerGap())
         );
         panel_titleLayout.setVerticalGroup(
             panel_titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_titleLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btn_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_titleLayout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
-                .addComponent(lb_title, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(21, 21, 21))
+                .addGap(11, 11, 11)
+                .addGroup(panel_titleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panel_titleLayout.createSequentialGroup()
+                        .addComponent(btn_exit, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(45, 45, 45))
+                    .addGroup(panel_titleLayout.createSequentialGroup()
+                        .addComponent(lb_title, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap())))
         );
 
-        getContentPane().add(panel_title, java.awt.BorderLayout.CENTER);
+        getContentPane().add(panel_title, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1060, 90));
 
         panel_total.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0), 2));
 
         panel_cusmanagement.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Title Information", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 3, 12))); // NOI18N
 
-        lb_cusid.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_cusid.setText("Title ID:");
+        lb_titleid.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lb_titleid.setText("Title ID:");
 
-        lb_getcusid.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_getcusid.setText("00111");
+        lb_gettitleid.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lb_gettitleid.setText("00111");
 
-        lb_cusname.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_cusname.setText("Title Name:");
+        lb_titlename.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
+        lb_titlename.setText("Title Name:");
 
-        lb_cusaddress.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_cusaddress.setText("Title Address:");
+        tf_gettitlename.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
 
-        lb_cusphone.setFont(new java.awt.Font("Times New Roman", 1, 14)); // NOI18N
-        lb_cusphone.setText("Customer Phone:");
+        btn_addtitle.setBackground(new java.awt.Color(0, 153, 255));
+        btn_addtitle.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btn_addtitle.setForeground(new java.awt.Color(255, 255, 255));
+        btn_addtitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/plus.png"))); // NOI18N
+        btn_addtitle.setText("ADD");
+        btn_addtitle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_addtitleActionPerformed(evt);
+            }
+        });
 
-        tf_getcusname.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_updatetitle.setBackground(new java.awt.Color(0, 153, 255));
+        btn_updatetitle.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btn_updatetitle.setForeground(new java.awt.Color(255, 255, 255));
+        btn_updatetitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/update.png"))); // NOI18N
+        btn_updatetitle.setText("UPDATE");
+        btn_updatetitle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_updatetitleActionPerformed(evt);
+            }
+        });
 
-        tf_getcusphone.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        btn_deletetitle.setBackground(new java.awt.Color(0, 153, 255));
+        btn_deletetitle.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btn_deletetitle.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minus.png"))); // NOI18N
+        btn_deletetitle.setText("DELETE");
+        btn_deletetitle.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_deletetitleActionPerformed(evt);
+            }
+        });
+
+        panel_inputidtitle.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Input Title ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 3, 12))); // NOI18N
+
+        tf_inputidtitle.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                tf_inputidtitleKeyPressed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout panel_inputidtitleLayout = new javax.swing.GroupLayout(panel_inputidtitle);
+        panel_inputidtitle.setLayout(panel_inputidtitleLayout);
+        panel_inputidtitleLayout.setHorizontalGroup(
+            panel_inputidtitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_inputidtitleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tf_inputidtitle)
+                .addContainerGap())
+        );
+        panel_inputidtitleLayout.setVerticalGroup(
+            panel_inputidtitleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_inputidtitleLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tf_inputidtitle, javax.swing.GroupLayout.DEFAULT_SIZE, 35, Short.MAX_VALUE)
+                .addContainerGap())
+        );
+
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reload.png"))); // NOI18N
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel_cusmanagementLayout = new javax.swing.GroupLayout(panel_cusmanagement);
         panel_cusmanagement.setLayout(panel_cusmanagementLayout);
@@ -128,60 +212,88 @@ public class TitleManagement extends javax.swing.JFrame {
             .addGroup(panel_cusmanagementLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(panel_cusmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_cusaddress)
-                    .addComponent(lb_cusphone)
-                    .addComponent(lb_cusname)
-                    .addComponent(lb_cusid))
-                .addGap(31, 31, 31)
-                .addGroup(panel_cusmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lb_getcusid, javax.swing.GroupLayout.DEFAULT_SIZE, 249, Short.MAX_VALUE)
-                    .addComponent(tf_getcusname)
-                    .addComponent(tf_getcusaddress)
-                    .addComponent(tf_getcusphone))
+                    .addComponent(panel_inputidtitle, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(panel_cusmanagementLayout.createSequentialGroup()
+                        .addGroup(panel_cusmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lb_titlename)
+                            .addComponent(lb_titleid))
+                        .addGap(67, 67, 67)
+                        .addGroup(panel_cusmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(tf_gettitlename, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(panel_cusmanagementLayout.createSequentialGroup()
+                                .addComponent(lb_gettitleid, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jLabel1)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_cusmanagementLayout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(btn_addtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_updatetitle)
+                        .addGap(18, 18, 18)
+                        .addComponent(btn_deletetitle, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
         panel_cusmanagementLayout.setVerticalGroup(
             panel_cusmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_cusmanagementLayout.createSequentialGroup()
-                .addGap(1, 1, 1)
-                .addGroup(panel_cusmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_cusid)
-                    .addComponent(lb_getcusid, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, Short.MAX_VALUE)
-                .addGroup(panel_cusmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_cusname)
-                    .addComponent(tf_getcusname, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(panel_cusmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(panel_cusmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(lb_titleid)
+                        .addComponent(lb_gettitleid, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(panel_cusmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lb_titlename)
+                    .addComponent(tf_gettitlename, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(panel_cusmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_cusaddress)
-                    .addComponent(tf_getcusaddress, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btn_addtitle, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btn_updatetitle)
+                    .addComponent(btn_deletetitle, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(panel_cusmanagementLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lb_cusphone)
-                    .addComponent(tf_getcusphone, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(23, 23, 23))
+                .addComponent(panel_inputidtitle, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
-        panel_inputidcus.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Input Title ID", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 3, 12))); // NOI18N
+        panel_titlelist.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Title List", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 3, 12))); // NOI18N
 
-        javax.swing.GroupLayout panel_inputidcusLayout = new javax.swing.GroupLayout(panel_inputidcus);
-        panel_inputidcus.setLayout(panel_inputidcusLayout);
-        panel_inputidcusLayout.setHorizontalGroup(
-            panel_inputidcusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_inputidcusLayout.createSequentialGroup()
+        tab_titlelist.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tab_titlelist.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tab_titlelistMouseClicked(evt);
+            }
+        });
+        scroll_titlelist.setViewportView(tab_titlelist);
+
+        javax.swing.GroupLayout panel_titlelistLayout = new javax.swing.GroupLayout(panel_titlelist);
+        panel_titlelist.setLayout(panel_titlelistLayout);
+        panel_titlelistLayout.setHorizontalGroup(
+            panel_titlelistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_titlelistLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tf_cusid)
+                .addComponent(scroll_titlelist, javax.swing.GroupLayout.DEFAULT_SIZE, 560, Short.MAX_VALUE)
                 .addContainerGap())
         );
-        panel_inputidcusLayout.setVerticalGroup(
-            panel_inputidcusLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_inputidcusLayout.createSequentialGroup()
+        panel_titlelistLayout.setVerticalGroup(
+            panel_titlelistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_titlelistLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tf_cusid, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                .addComponent(scroll_titlelist, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
-        panel_cuslist.setBorder(javax.swing.BorderFactory.createTitledBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true), "Title List", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 3, 12))); // NOI18N
+        panel_cusreservation.setBorder(javax.swing.BorderFactory.createTitledBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)), "Customer Reservation List", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Times New Roman", 3, 12))); // NOI18N
 
         tab_cuslist.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -196,104 +308,81 @@ public class TitleManagement extends javax.swing.JFrame {
         ));
         scroll_cuslist.setViewportView(tab_cuslist);
 
-        javax.swing.GroupLayout panel_cuslistLayout = new javax.swing.GroupLayout(panel_cuslist);
-        panel_cuslist.setLayout(panel_cuslistLayout);
-        panel_cuslistLayout.setHorizontalGroup(
-            panel_cuslistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_cuslistLayout.createSequentialGroup()
+        javax.swing.GroupLayout panel_cusreservationLayout = new javax.swing.GroupLayout(panel_cusreservation);
+        panel_cusreservation.setLayout(panel_cusreservationLayout);
+        panel_cusreservationLayout.setHorizontalGroup(
+            panel_cusreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panel_cusreservationLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(scroll_cuslist)
                 .addContainerGap())
         );
-        panel_cuslistLayout.setVerticalGroup(
-            panel_cuslistLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(panel_cuslistLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(scroll_cuslist, javax.swing.GroupLayout.PREFERRED_SIZE, 279, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        panel_cusreservationLayout.setVerticalGroup(
+            panel_cusreservationLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_cusreservationLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(scroll_cuslist, javax.swing.GroupLayout.PREFERRED_SIZE, 209, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50))
         );
 
-        btn_addcus.setBackground(new java.awt.Color(0, 153, 255));
-        btn_addcus.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        btn_addcus.setForeground(new java.awt.Color(255, 255, 255));
-        btn_addcus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reserve2.png"))); // NOI18N
-        btn_addcus.setText("RESERVATION");
+        btn_resevation.setBackground(new java.awt.Color(0, 153, 255));
+        btn_resevation.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btn_resevation.setForeground(new java.awt.Color(255, 255, 255));
+        btn_resevation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/reserve40.png"))); // NOI18N
+        btn_resevation.setText("RESERVATION");
+        btn_resevation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_resevationActionPerformed(evt);
+            }
+        });
 
-        btn_updatecus.setBackground(new java.awt.Color(0, 153, 255));
-        btn_updatecus.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        btn_updatecus.setForeground(new java.awt.Color(255, 255, 255));
-        btn_updatecus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/update.png"))); // NOI18N
-        btn_updatecus.setText("UPDATE");
-
-        btn_deletecus.setBackground(new java.awt.Color(0, 153, 255));
-        btn_deletecus.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        btn_deletecus.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/minus.png"))); // NOI18N
-        btn_deletecus.setText("DELETE");
-
-        btn_addcus1.setBackground(new java.awt.Color(0, 153, 255));
-        btn_addcus1.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        btn_addcus1.setForeground(new java.awt.Color(255, 255, 255));
-        btn_addcus1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/plus.png"))); // NOI18N
-        btn_addcus1.setText("ADD");
-
-        btn_addcus2.setBackground(new java.awt.Color(0, 153, 255));
-        btn_addcus2.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
-        btn_addcus2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancel_cus.png"))); // NOI18N
-        btn_addcus2.setText("CANCEL RESERVATION");
+        btn_cancelreservation.setBackground(new java.awt.Color(0, 153, 255));
+        btn_cancelreservation.setFont(new java.awt.Font("Times New Roman", 1, 12)); // NOI18N
+        btn_cancelreservation.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/cancel32.png"))); // NOI18N
+        btn_cancelreservation.setText(" CANCEL RESERVATION");
+        btn_cancelreservation.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_cancelreservationActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panel_totalLayout = new javax.swing.GroupLayout(panel_total);
         panel_total.setLayout(panel_totalLayout);
         panel_totalLayout.setHorizontalGroup(
             panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_totalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGap(10, 10, 10)
+                .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(panel_totalLayout.createSequentialGroup()
-                        .addComponent(panel_cuslist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(panel_totalLayout.createSequentialGroup()
-                        .addComponent(panel_cusmanagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(panel_totalLayout.createSequentialGroup()
-                                    .addComponent(btn_addcus1, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(26, 26, 26)
-                                    .addComponent(btn_updatecus, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGap(26, 26, 26)
-                                    .addComponent(btn_deletecus, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addComponent(panel_inputidcus, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addGroup(panel_totalLayout.createSequentialGroup()
-                                .addComponent(btn_addcus, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btn_addcus2, javax.swing.GroupLayout.PREFERRED_SIZE, 213, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(32, 32, 32))))
+                        .addComponent(panel_cusmanagement, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(6, 6, 6)
+                        .addComponent(panel_titlelist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panel_totalLayout.createSequentialGroup()
+                        .addComponent(panel_cusreservation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(btn_cancelreservation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btn_resevation, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
         panel_totalLayout.setVerticalGroup(
             panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panel_totalLayout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(panel_cusmanagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panel_titlelist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(16, 16, 16)
+                .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(panel_cusreservation, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(panel_totalLayout.createSequentialGroup()
-                        .addGap(31, 31, 31)
-                        .addComponent(panel_inputidcus, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_addcus1, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_updatecus, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_deletecus, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(76, 76, 76)
+                        .addComponent(btn_resevation, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addGroup(panel_totalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btn_addcus, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btn_addcus2, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(panel_totalLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(panel_cusmanagement, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(panel_cuslist, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                        .addComponent(btn_cancelreservation, javax.swing.GroupLayout.PREFERRED_SIZE, 51, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
 
-        getContentPane().add(panel_total, java.awt.BorderLayout.PAGE_END);
+        getContentPane().add(panel_total, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 86, 1060, 570));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -301,6 +390,157 @@ public class TitleManagement extends javax.swing.JFrame {
     private void btn_exitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_exitActionPerformed
         System.exit(0);
     }//GEN-LAST:event_btn_exitActionPerformed
+
+    private void btn_addtitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_addtitleActionPerformed
+        if (isEmpty()) {
+            Title title = new Title();
+            title.setTitleID(lb_gettitleid.getText().toString());
+            title.setTitleName(tf_gettitlename.getText().toString());
+            if (titleDao.save(title)) {
+                JOptionPane.showMessageDialog(this, "Insert new title is successfully");
+                loadTable();
+            } else {
+                JOptionPane.showMessageDialog(this, "Insert new title is successfully");
+            }
+        }
+    }//GEN-LAST:event_btn_addtitleActionPerformed
+
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        clear();
+        String titleid = makeNewID();
+        lb_gettitleid.setText(titleid);
+        loadTable();
+    }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void btn_updatetitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_updatetitleActionPerformed
+        try {
+            if (tab_titlelist.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(null, "You need choose the title !");
+            } else {
+                String id = lb_gettitleid.getText().toString();
+                Title title = titleDao.findTitleByID(id);
+                title.setTitleName(tf_gettitlename.getText());
+                titleDao.update(title);
+                JOptionPane.showMessageDialog(null, "Update title is successfully");
+                loadTable();
+                clear();
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Update title infomation failed");
+        }
+    }//GEN-LAST:event_btn_updatetitleActionPerformed
+
+    private void tab_titlelistMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tab_titlelistMouseClicked
+        try {
+            int index = this.tab_titlelist.getSelectedRow();
+            String ma = this.tab_titlelist.getValueAt(index, 0).toString();
+            Title title = titleDao.findTitleByID(ma);
+            this.setTitlepub(title);
+            lb_gettitleid.setText(this.getTitlepub().getTitleID());
+            tf_gettitlename.setText(this.getTitlepub().getTitleName());
+
+            DefaultTableModel model = new DefaultTableModel() {
+                public boolean isCellEditable(int rowIndex, int mColIndex) {
+                    return false;
+                }
+            };
+            model.addColumn("Customer ID");
+            model.addColumn("Customer Name");
+            model.addColumn("Customer Phone");
+            model.addColumn("Day of Reservation");
+            for (Resevation reservation : reserveDao.findReservationByIDTitle(ma)) {
+                model.addRow(new Object[]{
+                    reservation.getCustomer().getCustomerID(),
+                    reservation.getCustomer().getCustomerName(),
+                    reservation.getCustomer().getPhoneNumber(),
+                    reservation.getDayReserve()
+                });
+                this.tab_cuslist.setModel(model);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_tab_titlelistMouseClicked
+
+    private void btn_deletetitleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_deletetitleActionPerformed
+        try {
+            if (tab_titlelist.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(null, "You need select a title");
+            } else {
+                int dialog = JOptionPane.showConfirmDialog(this, "Do you want to delete ??", "Yes", JOptionPane.YES_NO_OPTION);
+                if (dialog == JOptionPane.YES_OPTION) {
+                    int index = this.tab_titlelist.getSelectedRow();
+                    String id = tab_titlelist.getValueAt(index, 0).toString();
+                    Title title = titleDao.findTitleByID(id);
+                    titleDao.delete(title);
+                    loadTable();
+                    clear();
+                    JOptionPane.showMessageDialog(null, "Delete is successfully !");
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Delete title is failed!");
+        }
+    }//GEN-LAST:event_btn_deletetitleActionPerformed
+
+    private void tf_inputidtitleKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_tf_inputidtitleKeyPressed
+        if (evt.getKeyCode() == KeyEvent.VK_ENTER) {
+            String id = tf_inputidtitle.getText().toString();
+            try {
+                DefaultTableModel model = new DefaultTableModel() {
+                    public boolean isCellEditable(int rowIndex, int mColIndex) {
+                        return false;
+                    }
+                };
+                model.addColumn("Title ID");
+                model.addColumn("Title Name");
+                Title title = titleDao.findTitleByID(id);
+                model.addRow(new Object[]{
+                    title.getTitleID(),
+                    title.getTitleName()
+                });
+                clear();
+                this.tab_titlelist.setModel(model);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+
+
+    }//GEN-LAST:event_tf_inputidtitleKeyPressed
+
+    private void btn_resevationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_resevationActionPerformed
+        if (tab_titlelist.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(null, "You need select a tilte");
+            } else {
+            Reservation reserve = new Reservation();
+            reserve.setVisible(true);
+        }
+    }//GEN-LAST:event_btn_resevationActionPerformed
+
+    private void btn_cancelreservationActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_cancelreservationActionPerformed
+        try {
+            if (tab_cuslist.getSelectedRow() == -1) {
+                JOptionPane.showMessageDialog(null, "You need select a customer");
+            } else {
+                int dialog = JOptionPane.showConfirmDialog(this, "Do you want to cancel this reservation ??", "Yes", JOptionPane.YES_NO_OPTION);
+                if (dialog == JOptionPane.YES_NO_OPTION) {
+                    int index = this.tab_cuslist.getSelectedRow();
+                    String id = tab_cuslist.getValueAt(index, 0).toString();
+                    Resevation reserve = reserveDao.findReservationByIDCustomer(id);
+                    reserveDao.delete(reserve);
+                    loadReservation();
+                    clear();
+                    JOptionPane.showMessageDialog(null, "Cancel is successfully !");
+                }
+            }
+
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Cancel title is failed!");
+        }
+    }//GEN-LAST:event_btn_cancelreservationActionPerformed
 
     /**
      * @param args the command line arguments
@@ -328,6 +568,7 @@ public class TitleManagement extends javax.swing.JFrame {
             java.util.logging.Logger.getLogger(TitleManagement.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
         //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -337,29 +578,94 @@ public class TitleManagement extends javax.swing.JFrame {
         });
     }
 
+    public String makeNewID() {
+        int temp = 0;
+        List<Title> listTitle = titleDao.getAll(Title.class);
+        for (int i = 0; i < listTitle.size(); i++) {
+            if (Integer.parseInt(listTitle.get(i).getTitleID()) > temp) {
+                temp = Integer.parseInt(listTitle.get(i).getTitleID());
+            }
+        }
+        temp++;
+        String newID = "" + temp;
+        return newID;
+    }
+
+    public void clear() {
+        lb_gettitleid.setText("");
+        tf_gettitlename.setText("");
+        tf_inputidtitle.setText("");
+    }
+
+    public boolean isEmpty() {
+        if (tf_gettitlename.getText().equalsIgnoreCase("")) {
+            JOptionPane.showMessageDialog(this, "Please make sure the fields are not empty ");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public void loadTable() {
+        DefaultTableModel model = new DefaultTableModel() {
+            public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return false;
+            }
+        };
+        model.addColumn("Title ID");
+        model.addColumn("Title Name");
+        for (Title title : titleDao.getAll(Title.class)) {
+            model.addRow(new Object[]{
+                title.getTitleID(),
+                title.getTitleName()
+            });
+            this.tab_titlelist.setModel(model);
+        }
+    }
+    public void loadReservation(){
+         DefaultTableModel model = new DefaultTableModel() {
+            public boolean isCellEditable(int rowIndex, int mColIndex) {
+                return false;
+            }
+        };
+        model.addColumn("Customer ID");
+            model.addColumn("Customer Name");
+            model.addColumn("Customer Phone");
+            model.addColumn("Day of Reservation");
+            for (Resevation reservation : reserveDao.getAll(Resevation.class)) {
+                model.addRow(new Object[]{
+                    reservation.getCustomer().getCustomerID(),
+                    reservation.getCustomer().getCustomerName(),
+                    reservation.getCustomer().getPhoneNumber(),
+                    reservation.getDayReserve()
+                });
+                this.tab_cuslist.setModel(model);
+            }
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btn_addcus;
-    private javax.swing.JButton btn_addcus1;
-    private javax.swing.JButton btn_addcus2;
-    private javax.swing.JButton btn_deletecus;
+    private javax.swing.JButton btn_addtitle;
+    private javax.swing.JButton btn_cancelreservation;
+    private javax.swing.JButton btn_deletetitle;
     private javax.swing.JButton btn_exit;
-    private javax.swing.JButton btn_updatecus;
-    private javax.swing.JLabel lb_cusaddress;
-    private javax.swing.JLabel lb_cusid;
-    private javax.swing.JLabel lb_cusname;
-    private javax.swing.JLabel lb_cusphone;
-    private javax.swing.JLabel lb_getcusid;
+    private javax.swing.JButton btn_resevation;
+    private javax.swing.JButton btn_updatetitle;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel lb_gettitleid;
     private javax.swing.JLabel lb_title;
-    private javax.swing.JPanel panel_cuslist;
+    private javax.swing.JLabel lb_titleid;
+    private javax.swing.JLabel lb_titlename;
     private javax.swing.JPanel panel_cusmanagement;
-    private javax.swing.JPanel panel_inputidcus;
+    private javax.swing.JPanel panel_cusreservation;
+    private javax.swing.JPanel panel_inputidtitle;
     private javax.swing.JPanel panel_title;
+    private javax.swing.JPanel panel_titlelist;
     private javax.swing.JPanel panel_total;
     private javax.swing.JScrollPane scroll_cuslist;
+    private javax.swing.JScrollPane scroll_titlelist;
     private javax.swing.JTable tab_cuslist;
-    private javax.swing.JTextField tf_cusid;
-    private javax.swing.JTextField tf_getcusaddress;
-    private javax.swing.JTextField tf_getcusname;
-    private javax.swing.JTextField tf_getcusphone;
+    private javax.swing.JTable tab_titlelist;
+    private javax.swing.JTextField tf_gettitlename;
+    private javax.swing.JTextField tf_inputidtitle;
     // End of variables declaration//GEN-END:variables
 }
